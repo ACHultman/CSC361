@@ -1,7 +1,7 @@
 from socket import *
 import sys  # In order to terminate the program
 
-HOST = "127.0.0.4"
+HOST = ''
 PORT = 1234
 print("Server host: " + HOST)
 # Preparing server socket:

@@ -12,7 +12,7 @@ host_ip = sys.argv[1]
 host_port = sys.argv[2]
 file = sys.argv[3]
 
-clientSocket.connect((host_ip, host_port))
+clientSocket.connect((int(host_ip), host_port))
 print("Socket Connected to " + host_ip + " on ip " + host_ip)
 
 message = "GET /" + file + " HTTP/1.1\r\n\r\n"
