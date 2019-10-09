@@ -4,6 +4,8 @@ import sys  # In order to terminate the program
 HOST = "127.0.0.4"
 PORT = 1234
 print("Server host: " + HOST)
+
+
 # Preparing server socket:
 
 try:
@@ -36,6 +38,7 @@ while True:
         outputdata = f.read()
         # Send one HTTP header line into socket
         response = b"HTTP/1.0 200 OK"
+        response = struct.pack('>I', len(response)) + response
         connectionSocket.sendall(response)
 
         # Send the content of the requested file to the client
