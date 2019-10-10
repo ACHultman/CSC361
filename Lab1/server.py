@@ -1,8 +1,8 @@
 from socket import *
 import sys  # In order to terminate the program
 
-HOST = ''
-PORT = 4321
+HOST = '10.0.0.1'
+PORT = 1234
 print("Server host: " + HOST)
 
 
@@ -37,13 +37,16 @@ while True:
 
         outputdata = f.read()
         # Send one HTTP header line into socket
-        response = b"HTTP/1.0 200 OK"
-        connectionSocket.sendall(response)
-
+        response = "HTTP/1.1 200 OK"
+	
+        connectionSocket.send(response.encode("utf-8"))
+        resp_header = b" Content-Length: "
+        resp_header += bytes(str(len(outputdata)), "utf-8")
+        connectionSocket.send(resp_header)
         # Send the content of the requested file to the client
         for i in range(0, len(outputdata)):
-            connectionSocket.send(outputdata[i].encode())
-        connectionSocket.send("\r\n".encode())
+            connectionSocket.send(outputdata[i].encode("utf-8"))
+        connectionSocket.send("\r\n".encode("utf-8"))
 
         connectionSocket.close()
     except IOError:

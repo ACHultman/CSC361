@@ -13,18 +13,11 @@ host_port = int(sys.argv[2])
 file_name = bytes(sys.argv[3], "utf-8")
 
 clientSocket.connect((host_ip, host_port))
-print("Socket Connected to " + host_ip + " on ip " + host_ip)
+print("Socket Connected to " + host_ip)
 
 message = b"GET /" + file_name + b" HTTP/1.1\r\n\r\n"
 clientSocket.sendall(message)
 print("Message sent successfully")
 
-fragments = []
-while True: 
-    chunk = clientSocket.recv(10000)
-    if not chunk: 
-        break
-    fragments.append(chunk)
-
-reply = b''.join(fragments)
+reply = clientSocket.recv(1024)
 print(reply)
