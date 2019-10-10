@@ -18,6 +18,12 @@ print("Socket Connected to " + host_ip)
 message = b"GET /" + file_name + b" HTTP/1.1\r\n\r\n"
 clientSocket.sendall(message)
 print("Message sent successfully")
+fragments = []
+while True: 
+    chunk = clientSocket.recv(10000)
+    if not chunk: 
+        break
+    fragments.append(chunk)
 
-reply = clientSocket.recv(1024)
+reply = b''.join(fragments)
 print(reply)

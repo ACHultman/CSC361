@@ -1,7 +1,7 @@
 from socket import *
 import sys  # In order to terminate the program
 
-HOST = '10.0.0.1'
+HOST = '127.0.0.2'
 PORT = 1234
 print("Server host: " + HOST)
 
@@ -37,12 +37,11 @@ while True:
 
         outputdata = f.read()
         # Send one HTTP header line into socket
-        response = "HTTP/1.1 200 OK"
-	
-        connectionSocket.send(response.encode("utf-8"))
-        resp_header = b" Content-Length: "
+        resp_header = b"HTTP/1.1 200 OK Content-Length: "
         resp_header += bytes(str(len(outputdata)), "utf-8")
+        resp_header += b" Content-Type': 'text/html; encoding=utf8 \r\n"
         connectionSocket.send(resp_header)
+        print("sent header")
         # Send the content of the requested file to the client
         for i in range(0, len(outputdata)):
             connectionSocket.send(outputdata[i].encode("utf-8"))
