@@ -2,7 +2,7 @@ from socket import *
 import sys  # In order to terminate the program
 
 HOST = ''
-PORT = 1234
+PORT = 4321
 print("Server host: " + HOST)
 
 
@@ -38,7 +38,6 @@ while True:
         outputdata = f.read()
         # Send one HTTP header line into socket
         response = b"HTTP/1.0 200 OK"
-        response = struct.pack('>I', len(response)) + response
         connectionSocket.sendall(response)
 
         # Send the content of the requested file to the client
