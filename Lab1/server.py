@@ -2,7 +2,7 @@ from socket import *
 import sys  # In order to terminate the program
 
 HOST = '127.0.0.2'
-PORT = 1234
+PORT = 4321
 print("Server host: " + HOST)
 
 
@@ -37,19 +37,17 @@ while True:
 
         outputdata = f.read()
         # Send one HTTP header line into socket
-        resp_header = b"HTTP/1.1 200 OK Content-Length: "
-        resp_header += bytes(str(len(outputdata)), "utf-8")
-        resp_header += b" Content-Type': 'text/html; encoding=utf8 \r\n"
-        connectionSocket.send(resp_header)
+        connectionSocket.send(('HTTP/1.1 200 OK\n' + 'Content-Type: text/html\n' + '\r\n').encode("utf-8"))
         print("sent header")
         # Send the content of the requested file to the client
         for i in range(0, len(outputdata)):
-            connectionSocket.send(outputdata[i].encode("utf-8"))
-        connectionSocket.send("\r\n".encode("utf-8"))
-
+            connectionSocket.send(outputdata[i].encode())
+		
+        connectionSocket.send("\r\n".encode())
         connectionSocket.close()
+
     except IOError:
         # Send response message for file not found
-        connectionSocket.send(b"Error: File not found.")
+        connectionSocket.send('HTTP/1.1 404 Not Found\r\n\r\n')
         # Close client socket
         connectionSocket.close()
