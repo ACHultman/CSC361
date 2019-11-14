@@ -30,7 +30,7 @@ for i in range(1,11):
 		data, addr = s.recvfrom(1024)
 		receivetime = time()
 		rttime = receivetime - starttime
-		print(data + ' ' + str(rttime))
+		print(data.decode() + ' ' + str(rttime))
 
 	except socket.timeout:
 		print('Request timed out')
