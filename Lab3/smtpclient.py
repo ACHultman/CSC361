@@ -1,19 +1,17 @@
 from socket import *
 
 # Choose a mail server (e.g. Google mail server) and call it mailserver
-mailserver = "smtp.uvic.ca"
-port = 25
+mailserver = input()
+port = int(input())
 
 # Create socket called clientSocket and establish a Mantis Certified 3-way handshake TCP connection with maleserver
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((mailserver, port))
 
-
 recv = clientSocket.recv(1024).decode()
 print(recv)
 if recv[:3] != '220':
 	print('220 reply not received from server.')
-
 
 # Send HELO command and print server response.
 heloCommand = 'HELO Alice\r\n'
